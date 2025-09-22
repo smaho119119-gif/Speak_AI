@@ -150,6 +150,11 @@ router.post(
 
 // Browse endpoint using mulmocast puppeteerCrawlerAgent
 router.post("/browse", async (req: Request, res: Response): Promise<void> => {
+  res.json({
+    success: false,
+    data: "This endpoint is temporarily disabled.",
+  });
+  /*
   const { url } = req.body;
 
   if (!url) {
@@ -172,6 +177,7 @@ router.post("/browse", async (req: Request, res: Response): Promise<void> => {
       details: errorMessage,
     });
   }
+  */
 });
 
 // Twitter oEmbed proxy endpoint
