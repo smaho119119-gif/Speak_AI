@@ -14,7 +14,7 @@
     "build:server": "tsc -p server/tsconfig.json",
     "lint": "eslint src server",
     "preview": "vite preview",
-    "start": "NODE_ENV=production node server/dist/index.js",
+    "start": "NODE_ENV=production node build/index.js",
     "format": "prettier --write '{src,server}/**/*.{ts,json,yaml,vue}'"
   },
   "dependencies": {
