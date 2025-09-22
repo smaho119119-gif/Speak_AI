@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import apiRoutes from "./routes/api.js";
 
@@ -31,11 +32,18 @@ app.use("/api", apiRoutes);
 
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../dist")));
-
-  app.get("/*", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "../dist/index.html"));
-  });
+  const distDir = path.join(__dirname, "../dist");
+  const indexHtml = path.join(distDir, "index.html");
+  if (fs.existsSync(indexHtml)) {
+    app.use(express.static(distDir));
+    app.get("/*", (req: Request, res: Response) => {
+      res.sendFile(indexHtml);
+    });
+  } else {
+    app.get("/", (req: Request, res: Response) => {
+      res.json({ status: "OK", message: "API is running" });
+    });
+  }
 }
 
 app.listen(PORT, () => {
